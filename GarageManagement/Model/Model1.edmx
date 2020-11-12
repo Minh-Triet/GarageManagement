@@ -1,0 +1,704 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GarageManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="idAdmin" />
+          </Key>
+          <Property Name="idAdmin" Type="int" Nullable="false" />
+          <Property Name="emailAdmin" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="nameAdmin" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="idContract" />
+          </Key>
+          <Property Name="idContract" Type="int" Nullable="false" />
+          <Property Name="dateRegistration" Type="datetime" Nullable="false" />
+          <Property Name="idOfficer" Type="int" Nullable="false" />
+          <Property Name="idCustomer" Type="int" Nullable="false" />
+          <Property Name="idVehicle" Type="int" Nullable="false" />
+          <Property Name="idParkingCard" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="idCustomer" />
+          </Key>
+          <Property Name="idCustomer" Type="int" Nullable="false" />
+          <Property Name="emailCustomer" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="nameCustomer" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="dateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GarageStaff">
+          <Key>
+            <PropertyRef Name="idGarageStaff" />
+          </Key>
+          <Property Name="idGarageStaff" Type="int" Nullable="false" />
+          <Property Name="emailGarageStaff" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="nameGarageStaff" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="dateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="idAdmin" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Officer">
+          <Key>
+            <PropertyRef Name="idOfficer" />
+          </Key>
+          <Property Name="idOfficer" Type="int" Nullable="false" />
+          <Property Name="emailOfficer" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="nameOfficer" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="dateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="idAdmin" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParkingCard">
+          <Key>
+            <PropertyRef Name="idParkingCard" />
+          </Key>
+          <Property Name="idParkingCard" Type="int" Nullable="false" />
+          <Property Name="idContract" Type="int" Nullable="false" />
+          <Property Name="idVehicleStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VehicleStatus">
+          <Key>
+            <PropertyRef Name="idVehicleStatus" />
+          </Key>
+          <Property Name="idVehicleStatus" Type="int" Nullable="false" />
+          <Property Name="nameStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="timeInputAndOutput" Type="datetime" Nullable="false" />
+          <Property Name="idGarageStaff" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Verhicle">
+          <Key>
+            <PropertyRef Name="idVerhicle" />
+          </Key>
+          <Property Name="idVerhicle" Type="int" Nullable="false" />
+          <Property Name="licensePlate" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="vehicleRegistration" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="describe" Type="text" />
+          <Property Name="idVehicleCategory" Type="int" Nullable="false" />
+          <Property Name="idCustomer" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VerhicleCategory">
+          <Key>
+            <PropertyRef Name="idVehicleCategory" />
+          </Key>
+          <Property Name="idVehicleCategory" Type="int" Nullable="false" />
+          <Property Name="nameVehicleCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Contract_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Officer">
+          <End Role="Officer" Type="Self.Officer" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Officer">
+              <PropertyRef Name="idOfficer" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="idOfficer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_ParkingCard">
+          <End Role="ParkingCard" Type="Self.ParkingCard" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingCard">
+              <PropertyRef Name="idParkingCard" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="idParkingCard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Verhicle">
+          <End Role="Verhicle" Type="Self.Verhicle" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Verhicle">
+              <PropertyRef Name="idVerhicle" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="idVehicle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GarageStaff_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+          <End Role="GarageStaff" Type="Self.GarageStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="idAdmin" />
+            </Principal>
+            <Dependent Role="GarageStaff">
+              <PropertyRef Name="idAdmin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Officer_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+          <End Role="Officer" Type="Self.Officer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="idAdmin" />
+            </Principal>
+            <Dependent Role="Officer">
+              <PropertyRef Name="idAdmin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParkingCard_VehicleStatus">
+          <End Role="VehicleStatus" Type="Self.VehicleStatus" Multiplicity="1" />
+          <End Role="ParkingCard" Type="Self.ParkingCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleStatus">
+              <PropertyRef Name="idVehicleStatus" />
+            </Principal>
+            <Dependent Role="ParkingCard">
+              <PropertyRef Name="idVehicleStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VehicleStatus_GarageStaff">
+          <End Role="GarageStaff" Type="Self.GarageStaff" Multiplicity="1" />
+          <End Role="VehicleStatus" Type="Self.VehicleStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GarageStaff">
+              <PropertyRef Name="idGarageStaff" />
+            </Principal>
+            <Dependent Role="VehicleStatus">
+              <PropertyRef Name="idGarageStaff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verhicle_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Verhicle" Type="Self.Verhicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Verhicle">
+              <PropertyRef Name="idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verhicle_VerhicleCategory">
+          <End Role="VerhicleCategory" Type="Self.VerhicleCategory" Multiplicity="1" />
+          <End Role="Verhicle" Type="Self.Verhicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VerhicleCategory">
+              <PropertyRef Name="idVehicleCategory" />
+            </Principal>
+            <Dependent Role="Verhicle">
+              <PropertyRef Name="idVehicleCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GarageManagementModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GarageStaff" EntityType="Self.GarageStaff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Officer" EntityType="Self.Officer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParkingCard" EntityType="Self.ParkingCard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VehicleStatus" EntityType="Self.VehicleStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Verhicle" EntityType="Self.Verhicle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VerhicleCategory" EntityType="Self.VerhicleCategory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Contract_Customer" Association="Self.FK_Contract_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Officer" Association="Self.FK_Contract_Officer">
+            <End Role="Officer" EntitySet="Officer" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_ParkingCard" Association="Self.FK_Contract_ParkingCard">
+            <End Role="ParkingCard" EntitySet="ParkingCard" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Verhicle" Association="Self.FK_Contract_Verhicle">
+            <End Role="Verhicle" EntitySet="Verhicle" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GarageStaff_Admin" Association="Self.FK_GarageStaff_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="GarageStaff" EntitySet="GarageStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Officer_Admin" Association="Self.FK_Officer_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="Officer" EntitySet="Officer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParkingCard_VehicleStatus" Association="Self.FK_ParkingCard_VehicleStatus">
+            <End Role="VehicleStatus" EntitySet="VehicleStatus" />
+            <End Role="ParkingCard" EntitySet="ParkingCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VehicleStatus_GarageStaff" Association="Self.FK_VehicleStatus_GarageStaff">
+            <End Role="GarageStaff" EntitySet="GarageStaff" />
+            <End Role="VehicleStatus" EntitySet="VehicleStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verhicle_Customer" Association="Self.FK_Verhicle_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Verhicle" EntitySet="Verhicle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verhicle_VerhicleCategory" Association="Self.FK_Verhicle_VerhicleCategory">
+            <End Role="VerhicleCategory" EntitySet="VerhicleCategory" />
+            <End Role="Verhicle" EntitySet="Verhicle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GarageManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="idAdmin" />
+          </Key>
+          <Property Name="idAdmin" Type="Int32" Nullable="false" />
+          <Property Name="emailAdmin" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameAdmin" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="GarageStaffs" Relationship="Self.FK_GarageStaff_Admin" FromRole="Admin" ToRole="GarageStaff" />
+          <NavigationProperty Name="Officers" Relationship="Self.FK_Officer_Admin" FromRole="Admin" ToRole="Officer" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="idContract" />
+          </Key>
+          <Property Name="idContract" Type="Int32" Nullable="false" />
+          <Property Name="dateRegistration" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idOfficer" Type="Int32" Nullable="false" />
+          <Property Name="idCustomer" Type="Int32" Nullable="false" />
+          <Property Name="idVehicle" Type="Int32" Nullable="false" />
+          <Property Name="idParkingCard" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Contract_Customer" FromRole="Contract" ToRole="Customer" />
+          <NavigationProperty Name="Officer" Relationship="Self.FK_Contract_Officer" FromRole="Contract" ToRole="Officer" />
+          <NavigationProperty Name="ParkingCard" Relationship="Self.FK_Contract_ParkingCard" FromRole="Contract" ToRole="ParkingCard" />
+          <NavigationProperty Name="Verhicle" Relationship="Self.FK_Contract_Verhicle" FromRole="Contract" ToRole="Verhicle" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="idCustomer" />
+          </Key>
+          <Property Name="idCustomer" Type="Int32" Nullable="false" />
+          <Property Name="emailCustomer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameCustomer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Contracts" Relationship="Self.FK_Contract_Customer" FromRole="Customer" ToRole="Contract" />
+          <NavigationProperty Name="Verhicles" Relationship="Self.FK_Verhicle_Customer" FromRole="Customer" ToRole="Verhicle" />
+        </EntityType>
+        <EntityType Name="GarageStaff">
+          <Key>
+            <PropertyRef Name="idGarageStaff" />
+          </Key>
+          <Property Name="idGarageStaff" Type="Int32" Nullable="false" />
+          <Property Name="emailGarageStaff" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameGarageStaff" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idAdmin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_GarageStaff_Admin" FromRole="GarageStaff" ToRole="Admin" />
+          <NavigationProperty Name="VehicleStatus" Relationship="Self.FK_VehicleStatus_GarageStaff" FromRole="GarageStaff" ToRole="VehicleStatus" />
+        </EntityType>
+        <EntityType Name="Officer">
+          <Key>
+            <PropertyRef Name="idOfficer" />
+          </Key>
+          <Property Name="idOfficer" Type="Int32" Nullable="false" />
+          <Property Name="emailOfficer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameOfficer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idAdmin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_Officer_Admin" FromRole="Officer" ToRole="Admin" />
+          <NavigationProperty Name="Contracts" Relationship="Self.FK_Contract_Officer" FromRole="Officer" ToRole="Contract" />
+        </EntityType>
+        <EntityType Name="ParkingCard">
+          <Key>
+            <PropertyRef Name="idParkingCard" />
+          </Key>
+          <Property Name="idParkingCard" Type="Int32" Nullable="false" />
+          <Property Name="idContract" Type="Int32" Nullable="false" />
+          <Property Name="idVehicleStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contracts" Relationship="Self.FK_Contract_ParkingCard" FromRole="ParkingCard" ToRole="Contract" />
+          <NavigationProperty Name="VehicleStatu" Relationship="Self.FK_ParkingCard_VehicleStatus" FromRole="ParkingCard" ToRole="VehicleStatus" />
+        </EntityType>
+        <EntityType Name="VehicleStatu">
+          <Key>
+            <PropertyRef Name="idVehicleStatus" />
+          </Key>
+          <Property Name="idVehicleStatus" Type="Int32" Nullable="false" />
+          <Property Name="nameStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="timeInputAndOutput" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idGarageStaff" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GarageStaff" Relationship="Self.FK_VehicleStatus_GarageStaff" FromRole="VehicleStatus" ToRole="GarageStaff" />
+          <NavigationProperty Name="ParkingCards" Relationship="Self.FK_ParkingCard_VehicleStatus" FromRole="VehicleStatus" ToRole="ParkingCard" />
+        </EntityType>
+        <EntityType Name="Verhicle">
+          <Key>
+            <PropertyRef Name="idVerhicle" />
+          </Key>
+          <Property Name="idVerhicle" Type="Int32" Nullable="false" />
+          <Property Name="licensePlate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vehicleRegistration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="describe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idVehicleCategory" Type="Int32" Nullable="false" />
+          <Property Name="idCustomer" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contracts" Relationship="Self.FK_Contract_Verhicle" FromRole="Verhicle" ToRole="Contract" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Verhicle_Customer" FromRole="Verhicle" ToRole="Customer" />
+          <NavigationProperty Name="VerhicleCategory" Relationship="Self.FK_Verhicle_VerhicleCategory" FromRole="Verhicle" ToRole="VerhicleCategory" />
+        </EntityType>
+        <EntityType Name="VerhicleCategory">
+          <Key>
+            <PropertyRef Name="idVehicleCategory" />
+          </Key>
+          <Property Name="idVehicleCategory" Type="Int32" Nullable="false" />
+          <Property Name="nameVehicleCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Verhicles" Relationship="Self.FK_Verhicle_VerhicleCategory" FromRole="VerhicleCategory" ToRole="Verhicle" />
+        </EntityType>
+        <Association Name="FK_GarageStaff_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+          <End Role="GarageStaff" Type="Self.GarageStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="idAdmin" />
+            </Principal>
+            <Dependent Role="GarageStaff">
+              <PropertyRef Name="idAdmin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Officer_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+          <End Role="Officer" Type="Self.Officer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="idAdmin" />
+            </Principal>
+            <Dependent Role="Officer">
+              <PropertyRef Name="idAdmin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Officer">
+          <End Role="Officer" Type="Self.Officer" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Officer">
+              <PropertyRef Name="idOfficer" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="idOfficer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_ParkingCard">
+          <End Role="ParkingCard" Type="Self.ParkingCard" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingCard">
+              <PropertyRef Name="idParkingCard" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="idParkingCard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Verhicle">
+          <End Role="Verhicle" Type="Self.Verhicle" Multiplicity="1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Verhicle">
+              <PropertyRef Name="idVerhicle" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="idVehicle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verhicle_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Verhicle" Type="Self.Verhicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Verhicle">
+              <PropertyRef Name="idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VehicleStatus_GarageStaff">
+          <End Role="GarageStaff" Type="Self.GarageStaff" Multiplicity="1" />
+          <End Role="VehicleStatus" Type="Self.VehicleStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GarageStaff">
+              <PropertyRef Name="idGarageStaff" />
+            </Principal>
+            <Dependent Role="VehicleStatus">
+              <PropertyRef Name="idGarageStaff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParkingCard_VehicleStatus">
+          <End Role="VehicleStatus" Type="Self.VehicleStatu" Multiplicity="1" />
+          <End Role="ParkingCard" Type="Self.ParkingCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleStatus">
+              <PropertyRef Name="idVehicleStatus" />
+            </Principal>
+            <Dependent Role="ParkingCard">
+              <PropertyRef Name="idVehicleStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verhicle_VerhicleCategory">
+          <End Role="VerhicleCategory" Type="Self.VerhicleCategory" Multiplicity="1" />
+          <End Role="Verhicle" Type="Self.Verhicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VerhicleCategory">
+              <PropertyRef Name="idVehicleCategory" />
+            </Principal>
+            <Dependent Role="Verhicle">
+              <PropertyRef Name="idVehicleCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GarageManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Contracts" EntityType="Self.Contract" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="GarageStaffs" EntityType="Self.GarageStaff" />
+          <EntitySet Name="Officers" EntityType="Self.Officer" />
+          <EntitySet Name="ParkingCards" EntityType="Self.ParkingCard" />
+          <EntitySet Name="VehicleStatus" EntityType="Self.VehicleStatu" />
+          <EntitySet Name="Verhicles" EntityType="Self.Verhicle" />
+          <EntitySet Name="VerhicleCategories" EntityType="Self.VerhicleCategory" />
+          <AssociationSet Name="FK_GarageStaff_Admin" Association="Self.FK_GarageStaff_Admin">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="GarageStaff" EntitySet="GarageStaffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Officer_Admin" Association="Self.FK_Officer_Admin">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="Officer" EntitySet="Officers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Customer" Association="Self.FK_Contract_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Officer" Association="Self.FK_Contract_Officer">
+            <End Role="Officer" EntitySet="Officers" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_ParkingCard" Association="Self.FK_Contract_ParkingCard">
+            <End Role="ParkingCard" EntitySet="ParkingCards" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Verhicle" Association="Self.FK_Contract_Verhicle">
+            <End Role="Verhicle" EntitySet="Verhicles" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verhicle_Customer" Association="Self.FK_Verhicle_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Verhicle" EntitySet="Verhicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VehicleStatus_GarageStaff" Association="Self.FK_VehicleStatus_GarageStaff">
+            <End Role="GarageStaff" EntitySet="GarageStaffs" />
+            <End Role="VehicleStatus" EntitySet="VehicleStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParkingCard_VehicleStatus" Association="Self.FK_ParkingCard_VehicleStatus">
+            <End Role="VehicleStatus" EntitySet="VehicleStatus" />
+            <End Role="ParkingCard" EntitySet="ParkingCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verhicle_VerhicleCategory" Association="Self.FK_Verhicle_VerhicleCategory">
+            <End Role="VerhicleCategory" EntitySet="VerhicleCategories" />
+            <End Role="Verhicle" EntitySet="Verhicles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GarageManagementModelStoreContainer" CdmEntityContainer="GarageManagementEntities">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="GarageManagementModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+                <ScalarProperty Name="emailAdmin" ColumnName="emailAdmin" />
+                <ScalarProperty Name="nameAdmin" ColumnName="nameAdmin" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contracts">
+            <EntityTypeMapping TypeName="GarageManagementModel.Contract">
+              <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="idContract" ColumnName="idContract" />
+                <ScalarProperty Name="dateRegistration" ColumnName="dateRegistration" />
+                <ScalarProperty Name="idOfficer" ColumnName="idOfficer" />
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+                <ScalarProperty Name="idVehicle" ColumnName="idVehicle" />
+                <ScalarProperty Name="idParkingCard" ColumnName="idParkingCard" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="GarageManagementModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+                <ScalarProperty Name="emailCustomer" ColumnName="emailCustomer" />
+                <ScalarProperty Name="nameCustomer" ColumnName="nameCustomer" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GarageStaffs">
+            <EntityTypeMapping TypeName="GarageManagementModel.GarageStaff">
+              <MappingFragment StoreEntitySet="GarageStaff">
+                <ScalarProperty Name="idGarageStaff" ColumnName="idGarageStaff" />
+                <ScalarProperty Name="emailGarageStaff" ColumnName="emailGarageStaff" />
+                <ScalarProperty Name="nameGarageStaff" ColumnName="nameGarageStaff" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Officers">
+            <EntityTypeMapping TypeName="GarageManagementModel.Officer">
+              <MappingFragment StoreEntitySet="Officer">
+                <ScalarProperty Name="idOfficer" ColumnName="idOfficer" />
+                <ScalarProperty Name="emailOfficer" ColumnName="emailOfficer" />
+                <ScalarProperty Name="nameOfficer" ColumnName="nameOfficer" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParkingCards">
+            <EntityTypeMapping TypeName="GarageManagementModel.ParkingCard">
+              <MappingFragment StoreEntitySet="ParkingCard">
+                <ScalarProperty Name="idParkingCard" ColumnName="idParkingCard" />
+                <ScalarProperty Name="idContract" ColumnName="idContract" />
+                <ScalarProperty Name="idVehicleStatus" ColumnName="idVehicleStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehicleStatus">
+            <EntityTypeMapping TypeName="GarageManagementModel.VehicleStatu">
+              <MappingFragment StoreEntitySet="VehicleStatus">
+                <ScalarProperty Name="idVehicleStatus" ColumnName="idVehicleStatus" />
+                <ScalarProperty Name="nameStatus" ColumnName="nameStatus" />
+                <ScalarProperty Name="timeInputAndOutput" ColumnName="timeInputAndOutput" />
+                <ScalarProperty Name="idGarageStaff" ColumnName="idGarageStaff" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Verhicles">
+            <EntityTypeMapping TypeName="GarageManagementModel.Verhicle">
+              <MappingFragment StoreEntitySet="Verhicle">
+                <ScalarProperty Name="idVerhicle" ColumnName="idVerhicle" />
+                <ScalarProperty Name="licensePlate" ColumnName="licensePlate" />
+                <ScalarProperty Name="vehicleRegistration" ColumnName="vehicleRegistration" />
+                <ScalarProperty Name="describe" ColumnName="describe" />
+                <ScalarProperty Name="idVehicleCategory" ColumnName="idVehicleCategory" />
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VerhicleCategories">
+            <EntityTypeMapping TypeName="GarageManagementModel.VerhicleCategory">
+              <MappingFragment StoreEntitySet="VerhicleCategory">
+                <ScalarProperty Name="idVehicleCategory" ColumnName="idVehicleCategory" />
+                <ScalarProperty Name="nameVehicleCategory" ColumnName="nameVehicleCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
